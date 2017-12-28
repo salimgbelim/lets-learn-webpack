@@ -3,6 +3,7 @@ import './scss/main.scss'
 import {sup} from "./js/module";
 import {hello} from "./js/hello";
 import {buildUser, countdownTimer, displayTags, loadProfiles} from "./js/about";
+import FlashMessage from './js/flash-message';
 
 hello()
 sup()
@@ -90,3 +91,50 @@ for (let tag of tags) {
 
 console.log(...tags);
 
+console.log('***** Classes *****');
+
+class Widget {
+
+    constructor() {
+        this.baseCSS = "site-widget";
+    }
+
+    parse(value) {
+        console.log('super class parse method');
+        return '<super> ==> ' + value;
+    }
+}
+
+class SponsorWidget extends Widget {
+
+    constructor(name, description, url) {
+        super();
+        this.name = name;
+        this.description = description;
+        this.url = url;
+    }
+
+    render() {
+        let link = this._buildLink(this.url);
+        let css = this.baseCSS;
+        return `css is : ${css} and the link is: ${link}`;
+    }
+
+    parse(){
+        let parseName = super.parse(this.name);
+        return `Sponsor: ${parseName}`;
+    }
+
+    _buildLink(url) {
+        return `someurl : ${url}`;
+    }
+}
+
+let sponsorWidget = new SponsorWidget("mywidget", "my widget description", "http://www.mywidget.com/");
+console.log(sponsorWidget.render());
+console.log(sponsorWidget.parse());
+
+console.log('****** export class as module*******');
+let flashMessage = new FlashMessage('some message');
+flashMessage.renderAlert();
+flashMessage.renderLog();
