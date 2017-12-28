@@ -2,6 +2,7 @@ const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -48,6 +49,16 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new ExtractTextPlugin('styles.css'),
-        new HtmlWebpackPlugin({title: 'Multiple Bundles'})
+        new HtmlWebpackPlugin({title: 'Multiple Bundles'}),
+        new BrowserSyncPlugin({
+                // browse to http://localhost:3000/ during development,
+                // ./public directory is being served
+                host: 'localhost',
+                port: 3000,
+                proxy: 'http://localhost:8080'
+            },
+            {
+                reload: false
+            })
     ]
 }
