@@ -49,7 +49,16 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new ExtractTextPlugin('styles.css'),
-        new HtmlWebpackPlugin({title: 'Multiple Bundles'}),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: 'src/views/index.html',
+            chunks:['app']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'about.html',
+            template: 'src/views/about.html',
+            chunks:['about']
+        }),
         new BrowserSyncPlugin({
                 // browse to http://localhost:3000/ during development,
                 // ./public directory is being served
