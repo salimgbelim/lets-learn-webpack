@@ -120,7 +120,7 @@ class SponsorWidget extends Widget {
         return `css is : ${css} and the link is: ${link}`;
     }
 
-    parse(){
+    parse() {
         let parseName = super.parse(this.name);
         return `Sponsor: ${parseName}`;
     }
@@ -138,3 +138,73 @@ console.log('****** export class as module*******');
 let flashMessage = new FlashMessage('some message');
 flashMessage.renderAlert();
 flashMessage.renderLog();
+
+console.log('****** custom iterator ******');
+let post = {
+    title: "New features in JS",
+    replies: 19
+}
+post[Symbol.iterator] = function () {
+
+    let properties = Object.keys(this);
+    let count = 0;
+    let isDone = false;
+
+    let next = () => {
+        if (count >= properties.length) {
+            isDone = true;
+        }
+
+        return {done: isDone, value: this[properties[count++]]};
+    }
+
+    return {next};
+}
+
+for (let p in post) {
+    console.log(`key : ${p} , value: ${post[p]}`);
+}
+
+console.log(...post);
+
+console.log('****** generators ******');
+
+function* nameList() {
+    yield 'Sam';
+    yield 'Tyler';
+}
+
+for (let myName of nameList()) {
+    console.log(myName);
+}
+
+let myNames = [...nameList()];
+console.log(myNames);
+
+let [myFirst, mySecond] = nameList();
+console.log(myFirst, mySecond);
+
+console.log('****** object iterator using generators ******');
+
+let generatorPosts = {
+    title: "New features in JS",
+    replies: 19
+};
+
+generatorPosts[Symbol.iterator] = function* () {
+    let properties = Object.keys(this);
+
+    for (let p of properties) {
+        yield this[p];
+    }
+}
+
+for (let generatorPost in generatorPosts) {
+    console.log(`key : ${generatorPost} , value: ${generatorPosts[generatorPost]}`);
+}
+
+
+
+
+
+

@@ -6,8 +6,8 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
     entry: {
-        app: './src/index.js',
-        about: './src/js/about.js'
+        app: ['babel-polyfill', './src/index.js'],
+        about: ['babel-polyfill', './src/js/about.js']
     },
     output: {
         filename: "[name].bundle.js",
@@ -52,12 +52,12 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'src/views/index.html',
-            chunks:['app']
+            chunks: ['app']
         }),
         new HtmlWebpackPlugin({
             filename: 'about.html',
             template: 'src/views/about.html',
-            chunks:['about']
+            chunks: ['about']
         }),
         new BrowserSyncPlugin({
                 // browse to http://localhost:3000/ during development,

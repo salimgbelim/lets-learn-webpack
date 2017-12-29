@@ -4,7 +4,7 @@ export default class FlashMessage {
     }
 
     renderAlert(){
-        alert(`${this.message} from alert`);
+       // alert(`${this.message} from alert`);
     }
 
     renderLog(){
